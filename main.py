@@ -6,8 +6,22 @@ from content_filtering import get_recommendations
 
 app = Flask(__name__)
 
+import csv
+
+all_movies = []
+
+with open('final.csv', encoding = 'utf8') as f:
+    reader = csv.reader(f)
+    data = list(reader)
+    all_movies = data[1:]
+
+liked_movies = []
+not_liked_movies = []
+did_not_watch = []
+
 @app.route("/get-movie")
 def get_movie():
+    print(all_movies[0])
     movie_data = {
         "title": all_movies[0][19],
         "poster_link": all_movies[0][27],
@@ -75,7 +89,9 @@ def recommended_movies():
             all_recommended.append(data)
     import itertools
     all_recommended.sort()
+    all_recommended.head()
     all_recommended = list(all_recommended for all_recommended,_ in itertools.groupby(all_recommended))
+    all_recommended.head()
     movie_data = []
     for recommended in all_recommended:
         _d = {
@@ -93,4 +109,4 @@ def recommended_movies():
     }), 200
 
 if __name__ == "__main__":
-  app.run()
+  app.run(debug = True)
