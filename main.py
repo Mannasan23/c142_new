@@ -89,9 +89,7 @@ def recommended_movies():
             all_recommended.append(data)
     import itertools
     all_recommended.sort()
-    all_recommended.head()
     all_recommended = list(all_recommended for all_recommended,_ in itertools.groupby(all_recommended))
-    all_recommended.head()
     movie_data = []
     for recommended in all_recommended:
         _d = {
